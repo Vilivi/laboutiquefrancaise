@@ -4,7 +4,6 @@
 
 .footer-custom {
     text-align:center;
-    bottom: 0;
     width: 100%;
     background-color: #dfeaff;
     padding-top: 25px;
@@ -36,4 +35,9 @@
 
 .product-page-price {
     font-size: 18px;
+}
+
+.cart-icon {
+    height: 1px;
+    padding-left: 20px;
 }
