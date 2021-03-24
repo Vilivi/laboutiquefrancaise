@@ -92,7 +92,6 @@ class OrderController extends AbstractController
                 $orderDetails->setTotal($article['product']->getPrice() * $article['quantity']);
                 $this->entityManager->persist($orderDetails);
             }
-
             // il faut d'abord persister Order, et les OrderDetails avant de les injecter dans la bdd, ensemble.
             $this->entityManager->flush();
 
@@ -100,7 +99,7 @@ class OrderController extends AbstractController
             return $this->render('order/add.html.twig', [
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
-                'delivery' => $deliverycontent
+                'delivery' => $deliverycontent,
             ]);
         }
 
