@@ -19,6 +19,7 @@ class RegisterController extends AbstractController
     {
         $this->em = $entityManager;
     }
+    
     /**
      * @Route("/inscription", name="register")
      */
