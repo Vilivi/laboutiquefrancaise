@@ -25,7 +25,7 @@ class OrderController extends AbstractController
     /**
      * @Route("/commande", name="order")
      */
-    public function index(Cart $cart, Request $request): Response
+    public function index(Cart $cart): Response
     {
         if(!$this->getUser()->getAddresses()->getValues())
         {
@@ -59,6 +59,7 @@ class OrderController extends AbstractController
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
             $date = new DateTime();
+            $reference = $date->format('dmY'). '-'.uniqid();
             $carriers = $form->get('carriers')->getData();
             $delivery = $form->get('addresses')->getData();
             $deliverycontent = $delivery->getFirstName(). ' ' . $delivery->getLastName();
@@ -73,6 +74,7 @@ class OrderController extends AbstractController
 
             //enregistrement de la commande Order
             $order = new Order();
+            $order->setReference($reference);
             $order->setUser($this->getUser());
             $order->setCreateAt($date);
             $order->setCarrierName($carriers->getName());
@@ -94,12 +96,12 @@ class OrderController extends AbstractController
             }
             // il faut d'abord persister Order, et les OrderDetails avant de les injecter dans la bdd, ensemble.
             $this->entityManager->flush();
-
             //on ne peut accéder à cette page que si le formulaire a bien été soumis et est valide.
             return $this->render('order/add.html.twig', [
                 'cart' => $cart->getFull(),
                 'carrier' => $carriers,
                 'delivery' => $deliverycontent,
+                'reference' => $order->getReference()
             ]);
         }
 

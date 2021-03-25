@@ -64,25 +64,29 @@
         var stripe = Stripe("pk_test_51IYYqQETPc1xlEzCYjOBYqPOnqooSGBJtkzKSlCVyLKwTEiTY7pthBdszOI8cOj1mAZOjrLCGcp9orYopYpT2tSV00wjtAD5a8");
         var checkoutButton = document.getElementById("checkout-button");
         checkoutButton.addEventListener("click", function () {
-            fetch("/commande/create-session", {
+            fetch("/commande/create-session/{{ reference }}", {
                 method: "POST",
             })
                 .then(function (response) {
-                return response.json();
+                    return response.json();
                 })
                 .then(function (session) {
-                return stripe.redirectToCheckout({ sessionId: session.id });
+                    if(session.error == 'order'){
+                        window.location.replace('{{ path('order') }}');
+                    } else {
+                        return stripe.redirectToCheckout({ sessionId: session.id });
+                    }
                 })
                 .then(function (result) {
                 // If redirectToCheckout fails due to a browser or network
                 // error, you should display the localized error message to your
                 // customer using error.message.
-                if (result.error) {
-                    alert(result.error.message);
-                }
+                    if (result.error) {
+                        alert(result.error.message);
+                    }
                 })
                 .catch(function (error) {
-                console.error("Error:", error);
+                    console.error("Error:", error);
                 });
         });
     </script>
