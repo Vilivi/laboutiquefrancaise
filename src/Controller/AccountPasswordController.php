@@ -18,6 +18,7 @@ class AccountPasswordController extends AbstractController
     {
         $this->em = $entityManager;
     }
+    
     /**
      * @Route("/compte/password", name="account_password")
      */

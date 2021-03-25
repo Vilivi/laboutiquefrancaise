@@ -20,7 +20,7 @@
             <div class="form-check">
                 {{ carrier.name }} <br>
                 {{ carrier.description }} <br>
-                {{ carrier.price|number_format(2, ',', '.') }} €
+                {{ (carrier.price / 100)|number_format(2, ',', '.') }} €
             </div>
         </div>
         <div class="col-md-6">
@@ -51,10 +51,10 @@
 
             <hr>
             <strong>Sous-Total: </strong>{{ (total / 100)|number_format(2, ',', '.')}}€<br>
-            <strong>Livraison: </strong>{{ carrier.price|number_format(2, ',', '.')}}€
+            <strong>Livraison: </strong>{{ (carrier.price / 100)|number_format(2, ',', '.')}}€
             <hr>
-            <strong>Total: </strong>{{ (total / 100 + carrier.price)|number_format(2, ',', '.')}}€
-            <a id="checkout-button" class="btn btn-success btn-block my-3">Payer | {{ (total / 100 + carrier.price)|number_format(2, ',', '.')}}€</a>
+            <strong>Total: </strong>{{ (total / 100 + carrier.price / 100)|number_format(2, ',', '.')}}€
+            <a id="checkout-button" class="btn btn-success btn-block my-3">Payer | {{ ((total + carrier.price) / 100)|number_format(2, ',', '.')}}€</a>
         </div>
     </div>
 {% endblock %}

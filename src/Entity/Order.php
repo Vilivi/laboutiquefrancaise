@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\OrderRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -61,6 +62,11 @@ class Order
      */
     private $reference;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $stripeSessionId;
+
     public function __construct()
     {
         $this->orderDetails = new ArrayCollection();
@@ -92,7 +98,7 @@ class Order
         return $this;
     }
 
-    public function getCreateAt(): ?\DateTimeInterface
+    public function getCreateAt(): ?DateTimeInterface
     {
         return $this->createAt;
     }
@@ -190,6 +196,18 @@ class Order
     public function setReference(string $reference): self
     {
         $this->reference = $reference;
+
+        return $this;
+    }
+
+    public function getStripeSessionId(): ?string
+    {
+        return $this->stripeSessionId;
+    }
+
+    public function setStripeSessionId(?string $stripeSessionId): self
+    {
+        $this->stripeSessionId = $stripeSessionId;
 
         return $this;
     }
