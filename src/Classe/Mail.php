@@ -7,7 +7,7 @@ use Mailjet\Resources;
 
 class Mail {
 
-  
+    
 
     public function send($to_email, $to_name, $subject, $content){
         $mj = new Client($this->api_key, $this->api_key_secret, true, ['version' => 'v3.1']);
@@ -34,6 +34,7 @@ class Mail {
             ]
         ];
         $response = $mj->post(Resources::$Email, ['body' => $body]);
-        $response->success() && dd($response->getData());
+        $response->success();
+        // $response->success() && dd($response->getData());
     }
 }
